@@ -4,8 +4,8 @@ import logo from "./icon.png";
 
 const NavBar = () => {
   return (
-    <HStack justifyContent="space-between">
-      <Image src={logo} htmlHeight="60px" htmlWidth="100px" />
+    <HStack justifyContent="space-between" padding="1rem">
+      <Image src={logo} htmlWidth="100px" padding="10px" />
       <ThemeSwitch></ThemeSwitch>
     </HStack>
   );

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-import { Grid, GridItem, Show } from "@chakra-ui/react";
-import ThemeSwitch from "./components/NavBar/ThemeSwitch";
+import { Grid, GridItem, Text } from "@chakra-ui/react";
 import NavBar from "./components/NavBar/NavBar";
 import GameBar from "./components/GameBar/GameBar";
 
@@ -12,9 +11,10 @@ function App() {
     <>
       <Grid
         templateAreas={{ base: `"nav" "main"`, lg: `"nav nav" "main main"` }}
-        h="40rem"
+        h="35rem"
+        gap="15rem"
       >
-        <GridItem area={"nav"}>
+        <GridItem area={"nav"} bg="#f5f50a" borderRadius="25px">
           <NavBar />
         </GridItem>
         <GridItem area={"main"}>
