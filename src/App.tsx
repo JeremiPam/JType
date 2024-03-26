@@ -5,7 +5,7 @@ import NavBar from "./components/NavBar/NavBar";
 import GameBar from "./components/GameBar/GameBar";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [words, setWords] = useState<string[]>([]);
 
   return (
     <>
@@ -18,7 +18,12 @@ function App() {
           <NavBar />
         </GridItem>
         <GridItem area={"main"}>
-          <GameBar placeHolder="temp" />
+          <GameBar
+            placeHolder="temp"
+            returnWords={(word: string) => {
+              setWords([...words, word]);
+            }}
+          />
         </GridItem>
       </Grid>
     </>
