@@ -6,13 +6,13 @@ const GameBar = ({
   returnWords,
 }: {
   placeHolder: string;
-  returnWords: (word: string) => void;
+  returnWords: (word: string, time: number) => void;
 }) => {
   const [value, setValue] = useState(placeHolder);
   const [fontColor, setFontColor] = useState("grey");
+  const [startTime, setStartTime] = useState(0);
   return (
     <>
-      <Text textColor="grey">just start typing!</Text>
       <HStack justifyContent="start" padding="0px">
         <Input
           variant="unstyled"
@@ -21,12 +21,23 @@ const GameBar = ({
           color={fontColor}
           w={`${placeHolder.length * 10}px`}
           onChange={(val) => {
+            if (val.target.value.length === 1 && startTime === 0)
+              setStartTime(Date.now);
             if (val.target.value === placeHolder) {
               setFontColor("green");
-              returnWords(val.target.value);
-            } else setFontColor("grey");
+              const currentTime = Date.now();
+              returnWords(val.target.value, (currentTime - startTime) / 1_000);
+              setStartTime(0);
+            } else if (
+              placeHolder.includes(val.target.value) &&
+              placeHolder.startsWith(val.target.value)
+            ) {
+              setFontColor("grey");
+            } else {
+              setFontColor("red");
+            }
             setValue(val.target.value);
-          }} //jakby zrobic 2 inputy, w pierwszym dac tyle charow ile jest w slowie napisanym przez usera a w drugim dac reszte jako placeholder?
+          }}
         ></Input>
         <Text textColor="grey">
           {placeHolder.slice(value.length, placeHolder.length)}
