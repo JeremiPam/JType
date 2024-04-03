@@ -2,13 +2,15 @@ import { HStack, Input, Text } from "@chakra-ui/react";
 import { useState } from "react";
 
 const GameBar = ({
-  placeHolder,
+  wordsArray,
   returnWords,
+  currentWord = wordsArray[0],
 }: {
-  placeHolder: string;
+  wordsArray: string[];
   returnWords: (word: string, time: number) => void;
+  currentWord: string;
 }) => {
-  const [value, setValue] = useState(placeHolder);
+  const [value, setValue] = useState(currentWord);
   const [fontColor, setFontColor] = useState("grey");
   const [startTime, setStartTime] = useState(0);
   return (
@@ -16,21 +18,25 @@ const GameBar = ({
       <HStack justifyContent="start" padding="0px">
         <Input
           variant="unstyled"
-          isInvalid={value !== placeHolder}
-          placeholder={placeHolder}
+          placeholder={currentWord}
           color={fontColor}
-          w={`${placeHolder.length * 10}px`}
+          isDisabled={typeof currentWord === "undefined"}
+          w={`${
+            typeof currentWord === "string" ? currentWord.length * 10 : 10
+          }px`}
           onChange={(val) => {
             if (val.target.value.length === 1 && startTime === 0)
               setStartTime(Date.now);
-            if (val.target.value === placeHolder) {
+            if (val.target.value === currentWord) {
               setFontColor("green");
               const currentTime = Date.now();
               returnWords(val.target.value, (currentTime - startTime) / 1_000);
               setStartTime(0);
+              val.target.value = "";
+              setValue(wordsArray.shift() || "");
             } else if (
-              placeHolder.includes(val.target.value) &&
-              placeHolder.startsWith(val.target.value)
+              currentWord.includes(val.target.value) &&
+              currentWord.startsWith(val.target.value)
             ) {
               setFontColor("grey");
             } else {
@@ -40,7 +46,9 @@ const GameBar = ({
           }}
         ></Input>
         <Text textColor="grey">
-          {placeHolder.slice(value.length, placeHolder.length)}
+          {typeof currentWord === "string" && typeof value === "string"
+            ? currentWord.slice(value.length, currentWord.length)
+            : ""}
         </Text>
       </HStack>
     </>

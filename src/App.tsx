@@ -5,7 +5,8 @@ import NavBar from "./components/NavBar/NavBar";
 import GameBar from "./components/GameBar/GameBar";
 
 function App() {
-  const [words, setWords] = useState<string[]>([]);
+  const [resultWords, setResultWords] = useState<string[]>([]);
+  const [inputWords, setInputwords] = useState<string[]>(["asdasd", "nbbbb"]);
   const [wpm, setWpm] = useState<number[]>([]);
   return (
     <>
@@ -19,13 +20,14 @@ function App() {
         </GridItem>
         <GridItem area={"main"}>
           <HStack>
-            <Text>{words.join(" ")}</Text>
+            <Text>{resultWords.join(" ")}</Text>
             <GameBar
-              placeHolder="temp"
+              wordsArray={inputWords}
               returnWords={(word: string, seconds: number) => {
-                setWords([...words, word]);
+                setResultWords([...resultWords, word]);
                 setWpm([...wpm, seconds]);
               }}
+              currentWord={inputWords[0]}
             />
           </HStack>
           <Text>
