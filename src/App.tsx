@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-import { Grid, GridItem, HStack, Text } from "@chakra-ui/react";
+import { Grid, GridItem, HStack, Text, VStack } from "@chakra-ui/react";
 import NavBar from "./components/NavBar/NavBar";
 import GameBar from "./components/GameBar/GameBar";
 import WordsCategory from "./components/WordsCategory/WordsCategory";
@@ -17,7 +17,7 @@ function App() {
     <>
       <Grid
         templateAreas={{
-          base: `"nav" "main"`,
+          base: `"nav" "main" "footer"`,
           lg: `"nav nav" "main main" "footer footer"`,
         }}
         h="35rem"
@@ -46,8 +46,10 @@ function App() {
               : ""}
           </Text>
         </GridItem>
+        <GridItem area={"footer"} textColor={"grey"}>
+          Made by Jeremi Pamuła
+        </GridItem>
       </Grid>
-      <div id="footer">asdasd</div>
     </>
   );
 }
