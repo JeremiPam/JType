@@ -3,24 +3,33 @@ import "./App.css";
 import { Grid, GridItem, HStack, Text } from "@chakra-ui/react";
 import NavBar from "./components/NavBar/NavBar";
 import GameBar from "./components/GameBar/GameBar";
+import WordsCategory from "./components/WordsCategory/WordsCategory";
 
 function App() {
   const [resultWords, setResultWords] = useState<string[]>([]);
-  const [inputWords, setInputwords] = useState<string[]>(["asdasd", "nbbbb"]);
+  const [inputWords, setInputwords] = useState<string[]>([
+    "test",
+    "test1",
+    "test2",
+  ]);
   const [wpm, setWpm] = useState<number[]>([]);
   return (
     <>
       <Grid
-        templateAreas={{ base: `"nav" "main"`, lg: `"nav nav" "main main"` }}
+        templateAreas={{
+          base: `"nav" "main"`,
+          lg: `"nav nav" "main main" "footer footer"`,
+        }}
         h="35rem"
         gap="15rem"
       >
-        <GridItem area={"nav"} bg="#f5f50a" borderRadius="25px">
+        <GridItem area={"nav"}>
           <NavBar />
         </GridItem>
         <GridItem area={"main"}>
-          <HStack>
+          <HStack justifyContent="center">
             <Text>{resultWords.join(" ")}</Text>
+
             <GameBar
               wordsArray={inputWords}
               returnWords={(word: string, seconds: number) => {
@@ -38,6 +47,7 @@ function App() {
           </Text>
         </GridItem>
       </Grid>
+      <div id="footer">asdasd</div>
     </>
   );
 }

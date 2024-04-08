@@ -20,7 +20,7 @@ const GameBar = ({
           variant="unstyled"
           placeholder={currentWord}
           color={fontColor}
-          isDisabled={typeof currentWord === "undefined"}
+          isReadOnly={typeof currentWord === "undefined"}
           w={`${
             typeof currentWord === "string" ? currentWord.length * 10 : 10
           }px`}
