@@ -27,6 +27,7 @@ function App() {
           <NavBar />
         </GridItem>
         <GridItem area={"main"}>
+          <WordsCategory onClick={() => {}}></WordsCategory>
           <HStack justifyContent="center">
             <Text>{resultWords.join(" ")}</Text>
 
