@@ -59,7 +59,7 @@ function App() {
             />
           </HStack>
           <Text padding={"20px"}>
-            Wpm:
+            words per minute:
             {wpm.length !== 0
               ? (60 / (wpm.reduce((a, b) => a + b) / wpm.length)).toFixed(2)
               : ""}
