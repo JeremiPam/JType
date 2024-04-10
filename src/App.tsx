@@ -1,18 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
-import { Grid, GridItem, HStack, Text, VStack } from "@chakra-ui/react";
+import { Grid, GridItem, HStack, Text } from "@chakra-ui/react";
 import NavBar from "./components/NavBar/NavBar";
 import GameBar from "./components/GameBar/GameBar";
 import WordsCategory from "./components/WordsCategory/WordsCategory";
+import apiClient from "./components/WordsCategory/apiClient";
 
 function App() {
+  const [count, setCount] = useState(10);
   const [resultWords, setResultWords] = useState<string[]>([]);
-  const [inputWords, setInputwords] = useState<string[]>([
-    "test",
-    "test1",
-    "test2",
-  ]);
+  const [inputWords, setInputwords] = useState<string[]>([]);
   const [wpm, setWpm] = useState<number[]>([]);
+  useEffect(() => {
+    Promise.all(
+      Array.from({ length: count }, () =>
+        apiClient.get<{ word: string }>("/words")
+      )
+    )
+      .then((res) => {
+        const newWords = res.map((res) => res.data.word);
+        setInputwords([...newWords]);
+      })
+      .catch((err) => console.log(err));
+  }, [count]);
   return (
     <>
       <Grid
@@ -27,7 +37,15 @@ function App() {
           <NavBar />
         </GridItem>
         <GridItem area={"main"}>
-          <WordsCategory onClick={() => {}}></WordsCategory>
+          <Text padding={"20px"}>
+            Choose how many words do you want to type:
+          </Text>
+          <WordsCategory
+            onClick={(count: number) => {
+              setCount(count);
+            }}
+          ></WordsCategory>
+          <Text padding={"20px"}>Start typing below!</Text>
           <HStack justifyContent="center">
             <Text>{resultWords.join(" ")}</Text>
 
@@ -40,7 +58,7 @@ function App() {
               currentWord={inputWords[0]}
             />
           </HStack>
-          <Text>
+          <Text padding={"20px"}>
             Wpm:
             {wpm.length !== 0
               ? (60 / (wpm.reduce((a, b) => a + b) / wpm.length)).toFixed(2)

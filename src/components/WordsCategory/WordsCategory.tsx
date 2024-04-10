@@ -1,7 +1,10 @@
 import { Button, HStack } from "@chakra-ui/react";
 
-const wordsCategory = ({ onClick: onClick }: { onClick: () => void }) => {
-  let count = 10;
+const wordsCategory = ({
+  onClick: onClick,
+}: {
+  onClick: (amount: number) => void;
+}) => {
   // const [tempWord, setTempWord] = useState("");
   // useEffect(() => {
   //   for (let i = 0; i < count; i++) {
@@ -11,13 +14,12 @@ const wordsCategory = ({ onClick: onClick }: { onClick: () => void }) => {
   //     onClick(tempWord);
   //   }
   // }, [count]);
-
   return (
     <>
       <HStack justifyContent={"center"}>
-        <Button>10</Button>
-        <Button>15</Button>
-        <Button>20</Button>
+        <Button onClick={() => onClick(5)}>5</Button>
+        <Button onClick={() => onClick(10)}>10</Button>
+        <Button onClick={() => onClick(15)}>15</Button>
       </HStack>
     </>
   );
